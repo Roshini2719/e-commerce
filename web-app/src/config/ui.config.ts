@@ -139,13 +139,19 @@ export const HOME = {
 export const AUTH = {
     login: {
         title: 'Welcome Back',
-        subtitle: 'Sign in to your account to continue shopping',
+        subtitle: 'Sign in to your account to enjoy shopping',
         submitButton: 'Sign In',
         forgotPassword: 'Forgot password?',
-        noAccount: "Don't have an account?",
+        noAccount: "Not signed in? Create a new Account and join us",
         createAccount: 'Create account',
         rememberMe: 'Remember me',
         orContinueWith: 'Or continue with',
+        socialIcons: {
+  google: 'https://www.svgrepo.com/show/475656/google-color.svg',
+  github: 'https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/github.svg', // safer alternative
+},
+
+
 
         hero: {
             title: 'Discover the Future of Shopping',
@@ -172,8 +178,8 @@ export const AUTH = {
     },
 
     register: {
-        title: 'Create Account',
-        subtitle: 'Join us to start your shopping journey',
+        title: 'Create a new Account',
+        subtitle: 'Join us to enjoy your shopping journey',
         submitButton: 'Create Account',
         haveAccount: 'Already have an account?',
         signIn: 'Sign in',
@@ -213,11 +219,11 @@ export const AUTH = {
             },
             email: {
                 label: 'Email Address',
-                placeholder: 'you@example.com',
+                placeholder: 'name@example.com',
             },
             phone: {
                 label: 'Phone Number (Optional)',
-                placeholder: '+1 (555) 000-0000',
+                placeholder: '+91 96754 87623',
             },
             password: {
                 label: 'Password',

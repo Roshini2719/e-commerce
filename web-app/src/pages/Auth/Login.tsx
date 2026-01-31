@@ -1,5 +1,5 @@
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { Mail, Lock, ArrowRight, Package, Shield, Sparkles } from 'lucide-react';
+import { Mail, Lock, ArrowRight, Package, Shield, Sparkles, Eye, EyeOff } from 'lucide-react';
 import { ROUTES } from '../../config/routes.constants';
 import { UI_CONFIG } from '../../config/ui.config';
 import Button from '../../components/ui/Button';
@@ -7,16 +7,19 @@ import Input from '../../components/ui/Input';
 import { useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { toast } from 'react-toastify';
+import { AUTH } from '../../config/ui.config';
 
+const socialIcons = AUTH.login.socialIcons;
 const { auth, brand, messages, images } = UI_CONFIG;
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false); // ✅ moved inside the component
+
   const { login, isLoading } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-
   const from = location.state?.from?.pathname || ROUTES.HOME;
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -26,11 +29,10 @@ export default function Login() {
       if (response.success) {
         toast.success(messages.success.loginSuccess);
 
-        // Redirect based on user role
         const userResult = await fetch(`${import.meta.env.VITE_API_URL}/api/v1/me`, {
           headers: {
-            'Authorization': `Bearer ${localStorage.getItem('shophub_auth_token')}`
-          }
+            'Authorization': `Bearer ${localStorage.getItem('shophub_auth_token')}`,
+          },
         }).then(res => res.json());
 
         if (userResult.user?.role === 'admin') {
@@ -79,27 +81,31 @@ export default function Login() {
 
             <div>
               <Input
-                type="password"
+                type={showPassword ? 'text' : 'password'}
                 label={auth.register.fields.password.label}
                 placeholder={auth.register.fields.password.placeholder}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 leftIcon={<Lock className="w-5 h-5" />}
+                rightIcon={
+                  <button
+                    type="button"
+                    className="text-neutral-500"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                  </button>
+                }
                 required
               />
-              <div className="flex justify-end mt-1">
-                <Link
-                  to={ROUTES.FORGOT_PASSWORD}
-                  className="text-sm text-primary-600 hover:text-primary-700 font-medium"
-                >
-                  {auth.login.forgotPassword}
-                </Link>
-              </div>
             </div>
 
             <div className="flex items-center justify-between">
               <label className="flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" className="w-4 h-4 rounded border-neutral-300 text-primary-600 focus:ring-primary-500" />
+                <input
+                  type="checkbox"
+                  className="w-4 h-4 rounded border-neutral-300 text-primary-600 focus:ring-primary-500"
+                />
                 <span className="text-sm text-neutral-600">{auth.login.rememberMe}</span>
               </label>
             </div>
@@ -121,30 +127,44 @@ export default function Login() {
           </div>
 
           {/* Social Login */}
-          <div className="grid grid-cols-2 gap-4">
-            <button className="flex items-center justify-center gap-2 px-4 py-2.5 border border-neutral-200 rounded-xl hover:bg-white hover:border-neutral-300 transition-all bg-white/50">
-              <img src={images.socialIcons.google} alt="Google" className="w-5 h-5" />
+          <div className="grid grid-cols-2 gap-4 mt-4">
+            {/* Google */}
+            <a
+              href={`${import.meta.env.VITE_API_URL}/auth/google`}
+              className="flex items-center justify-center gap-2 px-4 py-2.5 border border-neutral-200 rounded-xl hover:bg-white hover:border-neutral-300 transition-all bg-white/50"
+            >
+              <img src={socialIcons.google} alt="Google" className="w-5 h-5" />
               <span className="font-medium text-neutral-700">Google</span>
-            </button>
-            <button className="flex items-center justify-center gap-2 px-4 py-2.5 border border-neutral-200 rounded-xl hover:bg-white hover:border-neutral-300 transition-all bg-white/50">
-              <img src={images.socialIcons.github} alt="GitHub" className="w-5 h-5" />
+            </a>
+
+            {/* GitHub */}
+            <a
+              href={`${import.meta.env.VITE_API_URL}/auth/github`}
+              className="flex items-center justify-center gap-2 px-4 py-2.5 border border-neutral-200 rounded-xl hover:bg-white hover:border-neutral-300 transition-all bg-white/50"
+            >
+              <img src={socialIcons.github} alt="GitHub" className="w-5 h-5" />
               <span className="font-medium text-neutral-700">GitHub</span>
-            </button>
+            </a>
           </div>
 
           {/* Footer */}
           <p className="mt-8 text-center text-neutral-600">
             {auth.login.noAccount}{' '}
-            <Link to={ROUTES.REGISTER} className="font-semibold text-primary-600 hover:text-primary-700">
+            <Link
+              to={ROUTES.REGISTER}
+              className="font-semibold text-primary-600 hover:text-primary-700"
+            >
               {auth.login.createAccount}
             </Link>
           </p>
         </div>
       </div>
 
-      {/* Right Side - Branding */}
+      {/* Right Side Branding */}
       <div className="hidden lg:flex flex-1 bg-gradient-to-br from-primary-600 to-accent-600 relative overflow-hidden">
-        <div className={`absolute inset-0 bg-[url('${images.auth.loginBackground}')] bg-cover bg-center opacity-20 mix-blend-overlay`}></div>
+        <div
+          className={`absolute inset-0 bg-[url('${images.auth.loginBackground}')] bg-cover bg-center opacity-20 mix-blend-overlay`}
+        ></div>
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
 
         <div className="relative z-10 flex flex-col justify-center px-16 text-white">
@@ -152,12 +172,8 @@ export default function Login() {
             <div className="w-16 h-16 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center mb-6">
               <Sparkles className="w-8 h-8 text-white" />
             </div>
-            <h2 className="text-5xl font-bold mb-6 leading-tight">
-              {auth.login.hero.title}
-            </h2>
-            <p className="text-xl text-white/90 max-w-lg leading-relaxed">
-              {auth.login.hero.subtitle}
-            </p>
+            <h2 className="text-5xl font-bold mb-6 leading-tight">{auth.login.hero.title}</h2>
+            <p className="text-xl text-white/90 max-w-lg leading-relaxed">{auth.login.hero.subtitle}</p>
           </div>
 
           <div className="space-y-6">
