@@ -79,61 +79,37 @@ export const FOOTER = {
 
 // ==================== HOME ====================
 export const HOME = {
-    hero: {
-        title: 'Elevate Your Style',
-        subtitle: 'Discover curated collections of premium products',
-        primaryCTA: 'Start Shopping',
-        secondaryCTA: 'Explore Collections',
-        tagline:'Latest trends! Unbeatable prices!' ,
-
+  hero: {
+    title: 'Elevate Your Style',
+    subtitle: 'Discover curated collections of premium products',
+    primaryCTA: 'Start Shopping',
+    secondaryCTA: 'Explore Collections',
+    tagline: 'Latest trends! Unbeatable prices!',
+  },
+  features: [
+    { title: 'Free Shipping', description: 'On orders over ₹999' },
+    { title: 'Secure Payment', description: '100% secure transactions' },
+    { title: 'Easy Returns', description: '30-day return policy' },
+    { title: '24/7 Support', description: 'Dedicated customer service' },
+  ],
+  sections: {
+    featured: { title: 'Featured Products', subtitle: 'Handpicked items just for you' },
+    newArrivals: { title: 'New Arrivals', subtitle: 'Check out the latest additions' },
+    categories: { title: 'Shop by Category', subtitle: 'Explore our wide range of products' },
+    promotion: {
+      title: 'Special offer: Up to 50% off',
+      subtitle: 'Limited time offer on selected items. Don’t miss out!',
+      primaryCTA: 'Shop deals now',
     },
-
-    features: [
-        {
-            title: 'Free Shipping',
-            description: 'On orders over ₹999',
-        },
-        {
-            title: 'Secure Payment',
-            description: '100% secure transactions',
-        },
-        {
-            title: 'Easy Returns',
-            description: '30-day return policy',
-        },
-        {
-            title: '24/7 Support',
-            description: 'Dedicated customer service',
-        },
-    ],
-
-    sections: {
-        featured: {
-            title: 'Featured Products',
-            subtitle: 'Handpicked items just for you',
-        },
-        newArrivals: {
-            title: 'New Arrivals',
-            subtitle: 'Check out the latest additions',
-        },
-        categories: {
-            title: 'Shop by Category',
-            subtitle: 'Explore our wide range of products',
-        },
-        promotion: {
-            title:'Special offer:Up to 50% off',
-            subtitle:' Limited time offer on selected items. Dont miss out on amazing deals!',
-            primaryCTA: 'Shop deals now' ,     
-        },
-        newsletter: {
-            title:'Stay updated',
-            subtitle: 'Subscribe to our newsletter for exclusive deals and new arrivals',
-            description:'Enter your email',
-            primaryCTA:'Join us'
-
-        }
+    newsletter: {
+      title: 'Stay updated',
+      subtitle: 'Subscribe to our newsletter for exclusive deals and new arrivals',
+      description: 'Enter your email',
+      primaryCTA: 'Join us',
     },
+  },
 } as const;
+
 
 // ==================== AUTH ====================
 export const AUTH = {

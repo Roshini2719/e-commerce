@@ -5,6 +5,7 @@ import { mockApi } from '../services/mockApi';
 import { Product } from '../types';
 import Button from '../components/ui/Button';
 
+
 export default function Products() {
   const [products, setProducts] = useState<Product[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
@@ -37,7 +38,7 @@ export default function Products() {
     let result = [...products];
 
     if (selectedCategory) {
-      result = result.filter(p => p.category === selectedCategory);
+      result = result.filter(p => p.category && p.category.name === selectedCategory);
     }
 
     if (sortBy === 'price-low') {
@@ -219,11 +220,11 @@ export default function Products() {
                 {filteredProducts.map((product) => (
                   <ProductCard
                     key={product.id}
-                    id={product.id}
+                    id={String(product.id)}
                     name={product.name}
                     price={product.price}
                     image={product.image}
-                    category={product.category}
+                    category={product.category?.name}
                   />
                 ))}
               </div>
